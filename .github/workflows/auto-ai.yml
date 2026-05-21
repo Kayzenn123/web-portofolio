@@ -1,0 +1,29 @@
+name: Autonomous AI Worker
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  improve-project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Modify Project
+        run: |
+          echo "<!-- AI Updated $(date) -->" >> index.html
+
+      - name: Commit Changes
+        run: |
+          git config --global user.name "AI Worker"
+          git config --global user.email "ai@worker.com"
+          git add .
+          git commit -m "Autonomous AI update" || echo "No changes"
+
+      - name: Push Changes
+        run: |
+          git push
