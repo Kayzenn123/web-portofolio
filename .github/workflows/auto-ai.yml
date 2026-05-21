@@ -24,9 +24,9 @@ jobs:
       - name: Install Axios
         run: npm install axios
 
-      - name: Run Grok AI
+      - name: Run AI
         env:
-          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: |
 
           cat > ai.js << 'EOF'
@@ -45,35 +45,24 @@ jobs:
               }
 
               const prompt = `
-              Improve this website into a premium futuristic cyberpunk SaaS UI.
-              Add:
-              - luxury UI/UX
-              - smooth animations
-              - responsive layout
-              - glassmorphism
-              - cinematic hero section
-              - premium typography
-              - animated buttons
-              - futuristic dashboard feel
-
-              Return ONLY raw HTML code.
+              Improve this website into a futuristic premium SaaS landing page.
+              Make it modern, cinematic, animated, luxury UI/UX, responsive.
+              Return ONLY raw HTML.
+              CURRENT CODE:
+              ${html}
               `;
 
               const response = await axios.post(
-                "https://api.x.ai/v1/chat/completions",
+                "https://openrouter.ai/api/v1/chat/completions",
                 {
-                  model: "grok-3-mini",
+                  model: "meta-llama/llama-3.3-8b-instruct:free",
                   messages: [
-                    {
-                      role: "user",
-                      content: prompt
-                    }
-                  ],
-                  temperature: 0.8
+                    { role: "user", content: prompt }
+                  ]
                 },
                 {
                   headers: {
-                    "Authorization": "Bearer " + process.env.XAI_API_KEY,
+                    "Authorization": "Bearer " + process.env.OPENROUTER_API_KEY,
                     "Content-Type": "application/json"
                   }
                 }
@@ -84,7 +73,7 @@ jobs:
 
               fs.writeFileSync("index.html", result);
 
-              console.log("Website updated by Grok.");
+              console.log("AI update success");
 
             } catch (err) {
               console.error(err.response?.data || err.message);
@@ -102,7 +91,7 @@ jobs:
           git config --global user.name "AI Worker"
           git config --global user.email "ai@worker.com"
           git add .
-          git commit -m "Autonomous Grok AI redesign" || echo "No changes"
+          git commit -m "AI autonomous update" || echo "No changes"
 
       - name: Push Changes
         run: git push
