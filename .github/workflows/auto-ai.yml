@@ -2,8 +2,6 @@ name: Autonomous AI Worker
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 */6 * * *'
 
 permissions:
   contents: write
@@ -21,56 +19,67 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Dependencies
-        run: npm install axios fs
+      - name: Install Axios
+        run: npm install axios
 
-      - name: Generate AI Improvements
+      - name: Run AI
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
+
           cat > ai.js << 'EOF'
           const axios = require("axios");
           const fs = require("fs");
 
-          async function runAI() {
-            let html = "";
-
+          async function main() {
             try {
-              html = fs.readFileSync("index.html", "utf8");
-            } catch {
-              html = "<html><body><h1>Empty Project</h1></body></html>";
-            }
 
-            const prompt = `
-            Improve this HTML landing page into a premium futuristic modern SaaS UI.
-            Add better UI/UX, sections, gradients, animations, premium layout, modern typography, and cinematic feel.
+              let currentHTML = "";
 
-            Return ONLY raw HTML code.
-
-            CURRENT HTML:
-            ${html}
-            `;
-
-            const response = await axios.post(
-              "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + process.env.GEMINI_API_KEY,
-              {
-                contents: [
-                  {
-                    parts: [{ text: prompt }]
-                  }
-                ]
+              try {
+                currentHTML = fs.readFileSync("index.html", "utf8");
+              } catch {
+                currentHTML = "<html><body><h1>Starter</h1></body></html>";
               }
-            );
 
-            const text =
-              response.data.candidates[0].content.parts[0].text;
+              const prompt = `
+              Create a premium futuristic landing page.
+              Return ONLY valid HTML.
+              `;
 
-            fs.writeFileSync("index.html", text);
+              const response = await axios.post(
+                "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + process.env.GEMINI_API_KEY,
+                {
+                  contents: [
+                    {
+                      parts: [
+                        { text: prompt }
+                      ]
+                    }
+                  ]
+                }
+              );
 
-            console.log("AI website updated.");
+              console.log(JSON.stringify(response.data, null, 2));
+
+              const text =
+                response.data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+              if (!text) {
+                throw new Error("No AI response");
+              }
+
+              fs.writeFileSync("index.html", text);
+
+              console.log("Website updated.");
+
+            } catch (err) {
+              console.error(err.response?.data || err.message);
+              process.exit(1);
+            }
           }
 
-          runAI();
+          main();
           EOF
 
           node ai.js
@@ -80,7 +89,7 @@ jobs:
           git config --global user.name "AI Worker"
           git config --global user.email "ai@worker.com"
           git add .
-          git commit -m "AI autonomous redesign" || echo "No changes"
+          git commit -m "AI generated website" || echo "No changes"
 
       - name: Push Changes
         run: git push
