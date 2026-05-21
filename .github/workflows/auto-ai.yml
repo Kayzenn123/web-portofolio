@@ -2,6 +2,8 @@ name: Autonomous AI Worker
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'
 
 permissions:
   contents: write
@@ -22,9 +24,9 @@ jobs:
       - name: Install Axios
         run: npm install axios
 
-      - name: Run AI
+      - name: Run Grok AI
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
         run: |
 
           cat > ai.js << 'EOF'
@@ -34,44 +36,55 @@ jobs:
           async function main() {
             try {
 
-              let currentHTML = "";
+              let html = "";
 
               try {
-                currentHTML = fs.readFileSync("index.html", "utf8");
+                html = fs.readFileSync("index.html", "utf8");
               } catch {
-                currentHTML = "<html><body><h1>Starter</h1></body></html>";
+                html = "<html><body><h1>Starter</h1></body></html>";
               }
 
               const prompt = `
-              Create a premium futuristic landing page.
-              Return ONLY valid HTML.
+              Improve this website into a premium futuristic cyberpunk SaaS UI.
+              Add:
+              - luxury UI/UX
+              - smooth animations
+              - responsive layout
+              - glassmorphism
+              - cinematic hero section
+              - premium typography
+              - animated buttons
+              - futuristic dashboard feel
+
+              Return ONLY raw HTML code.
               `;
 
               const response = await axios.post(
-                "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + process.env.GEMINI_API_KEY,
+                "https://api.x.ai/v1/chat/completions",
                 {
-                  contents: [
+                  model: "grok-3-mini",
+                  messages: [
                     {
-                      parts: [
-                        { text: prompt }
-                      ]
+                      role: "user",
+                      content: prompt
                     }
-                  ]
+                  ],
+                  temperature: 0.8
+                },
+                {
+                  headers: {
+                    "Authorization": "Bearer " + process.env.XAI_API_KEY,
+                    "Content-Type": "application/json"
+                  }
                 }
               );
 
-              console.log(JSON.stringify(response.data, null, 2));
+              const result =
+                response.data.choices[0].message.content;
 
-              const text =
-                response.data.candidates?.[0]?.content?.parts?.[0]?.text;
+              fs.writeFileSync("index.html", result);
 
-              if (!text) {
-                throw new Error("No AI response");
-              }
-
-              fs.writeFileSync("index.html", text);
-
-              console.log("Website updated.");
+              console.log("Website updated by Grok.");
 
             } catch (err) {
               console.error(err.response?.data || err.message);
@@ -89,7 +102,7 @@ jobs:
           git config --global user.name "AI Worker"
           git config --global user.email "ai@worker.com"
           git add .
-          git commit -m "AI generated website" || echo "No changes"
+          git commit -m "Autonomous Grok AI redesign" || echo "No changes"
 
       - name: Push Changes
         run: git push
