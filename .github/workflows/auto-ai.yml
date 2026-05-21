@@ -42,7 +42,7 @@ jobs:
             }
 
             axios.post('https://openrouter.ai/api/v1/chat/completions',{
-              model: 'mistralai/mistral-7b-instruct:free',
+              model: 'openai/gpt-4o-mini'
               messages: [{
                 role: 'user',
                 content: 'Improve this into futuristic SaaS UI. Return ONLY HTML.\n\n' + html
