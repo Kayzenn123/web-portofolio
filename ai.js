@@ -19,7 +19,7 @@ async function run() {
           role: "user",
           content:
             
-You are a Prompt-to-Code Architect inside an autonomous development system.
+`You are a Prompt-to-Code Architect inside an autonomous development system.
 Your job is to convert user requests into production-grade MASTER PROMPTS for a second AI coding step.
 
 IMPORTANT:
@@ -129,7 +129,7 @@ senior product designer
 creative director
 frontend strategist
 The generated prompt must be optimized for a downstream coding AI that will produce a single HTML file using HTML/CSS/JS only.is website into futuristic SaaS UI. Return ONLY HTML:\n\n" +
-            html,
+            html,`
         },
       ],
     },
