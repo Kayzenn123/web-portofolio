@@ -11,11 +11,24 @@ async function run() {
   }
 
   const res = await axios.post(
-    "https://openrouter.ai/api/v1/chat/completions",
-    {
-      model: "anthropic/claude-3.5-sonnet",
-      messages: [
-        {
+  "https://openrouter.ai/api/v1/chat/completions",
+  {
+    model: "baidu/cobuddy:free",
+    messages: [
+      {
+        role: "user",
+        content: "Improve this website UI...\n\n" + html
+      }
+    ]
+  },
+  {
+    headers: {
+      Authorization: "Bearer " + process.env.OPENROUTER_API_KEY,
+      "Content-Type": "application/json"
+    },
+    timeout: 60000
+  }
+);
           role: "user",
           content:
             
