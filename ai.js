@@ -13,7 +13,7 @@ async function run() {
   const res = await axios.post(
     "https://openrouter.ai/api/v1/chat/completions",
     {
-      model: "openai/gpt-4o-mini",
+      model: "anthropic/claude-3.5-sonnet",
       messages: [
         {
           role: "user",
