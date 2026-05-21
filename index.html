@@ -1,55 +1,142 @@
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Saya</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: white;
-            font-family: 'Roboto', sans-serif;
-            text-align: center;
-            padding: 5% 10%;
-            margin: 0;
-            transition: background 0.5s ease;
-        }
-        h1 {
-            font-size: 3em;
-            margin: 0;
-            padding: 20px 0;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-        }
-        .cta-button {
-            background-color: #ff3e00;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            cursor: pointer;
-            border-radius: 25px;
-            transition: background-color 0.3s, transform 0.3s;
-            margin-top: 20px;
-        }
-        .cta-button:hover {
-            background-color: #ff5722;
-            transform: translateY(-2px);
-        }
-        footer {
-            margin-top: 50px;
-            font-size: 0.8em;
-            color: rgba(255, 255, 255, 0.7);
-        }
-    </style>
-</head>
-<body>
-    <h1>Welcome to Website Saya Online 🚀</h1>
-    <button class="cta-button">Get Started</button>
-    <footer>
-        <p>&copy; 2026 Website Saya. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+**MASTER PROMPT untuk Aplikasi Absensi:**
+
+```plaintext
+Create an advanced attendance web application designed for corporate environments. The solution should embody a premium, modern SaaS aesthetic, emphasizing a clean, futuristic user interface that ensures intuitive navigation.
+
+Design Direction:
+The design should evoke a sense of professionalism and innovation, incorporating sleek lines and a spacious layout to enhance user engagement and experience.
+
+UI Style:
+Utilize a futuristic style featuring glassmorphism elements that create depth. Emphasize high-end graphics and a clean aesthetic. Include an immersive interface with smooth animations that feel responsive and alive.
+
+UX Goals:
+- Facilitate easy check-in/check-out processes.
+- Provide quick access to attendance records.
+- Ensure all user interactions are seamless and intuitive.
+
+Layout Structure:
+- A single-page dashboard layout featuring a sidebar with navigation links to "Home", "Attendance Records", "Reports", and "Settings".
+- A central display area for real-time attendance statistics with visualizations (charts/graphs) for analytics.
+
+Features:
+- Real-time attendance status (check-in/check-out buttons).
+- User management system to handle multiple employee profiles.
+- Advanced reporting tools with filters for date, department, and attendance type.
+- Notifications for upcoming shifts and reminders for clocking in/out.
+
+Visual Hierarchy:
+- Prioritize the attendance status at the top of the dashboard.
+- Use larger typography for key metrics and maintain a balanced text-to-graphic ratio.
+- Employ color contrasts to distinguish between actionable buttons and informational content.
+
+Animation Rules:
+- Smooth transitions for buttons on hover.
+- Fade-in effects for dynamically updated data.
+- Slide-in animations for sidebar navigation.
+
+Color System:
+- A sophisticated color palette with dark navy, teal accents, and soft gradient backgrounds to enhance readability and focus.
+- Use green to signify attendance and red for alerts.
+
+Typography:
+- Utilize modern sans-serif fonts with varying weights to create a clear hierarchy.
+- Maintain adequate line spacing for readability.
+
+Component Style:
+- Design buttons with rounded edges and hover effects that subtly change colors based on state.
+- Data cards for displaying attendance summaries should have shadow effects to create depth.
+
+Responsive Rules:
+- Optimize the layout for various devices, ensuring all elements resize appropriately.
+- Maintain usability on mobile devices with touch-friendly controls and simplified navigation.
+
+Mobile-first Rules:
+- Prioritize mobile UI accessibility, considering thumb zones and simplified interfaces.
+- Ensure that core functionalities are easily accessible on smaller screens.
+
+Interaction Effects:
+- Use subtle hover effects on buttons to indicate interactivity.
+- Employ a modal for significant actions such as adding or editing attendance records.
+
+Restrictions:
+- Do not use default HTML templates or generic Bootstrap components.
+- Refrain from adding heavy frameworks or libraries like GSAP, jQuery, or Bootstrap.
+
+Code Standards:
+- Write clean HTML, CSS, and JavaScript (vanilla) without extraneous libraries.
+
+Expected Final Result:
+The final output should be a seamless, visually appealing attendance web application that feels immersive and integrates advanced functionalities while maintaining a high-end finish. The application must be responsive and optimized for both desktop and mobile platforms.
+```
+
+---
+
+**MASTER PROMPT untuk Dashboard Crypto:**
+
+```plaintext
+Create a high-end cryptocurrency trading dashboard that delivers a cutting-edge user experience for traders. The design requires a futuristic interface characterized by clean lines and an immersive ambiance, emphasizing real-time data display and interaction.
+
+Design Direction:
+Focus on a sleek, professional appearance with advanced visualizations and a dynamic layout tailored for active traders. Aim for a high-tech aesthetic that keeps users engaged.
+
+UI Style:
+Utilize a neon futuristic style with dark themes enriched by vibrant highlights. Incorporate glassmorphism effects to elevate certain elements and ensure clarity in data presentation.
+
+UX Goals:
+- Provide real-time market data with minimal latency.
+- Enable efficient navigation through various trading pairs and historical data.
+- Ensure user actions (buy, sell, trade) are straightforward and intuitive.
+
+Layout Structure:
+- A multi-section layout comprising a top navigation bar, a main chart area, and side panels for market stats and news.
+- The central chart should be expansive and interactive, allowing for zoom and scroll functionalities.
+
+Features:
+- Real-time price tracking for selected cryptocurrencies.
+- Interactive candlestick charts with the ability to toggle between time frames.
+- Customizable watchlist for preferred assets and notifications for price changes.
+- Analytics and insights section with market news aggregation.
+
+Visual Hierarchy:
+- Prioritize the main trading chart at the center with larger fonts for critical price indicators.
+- Use color differentiation prominently to highlight price movements and trends.
+
+Animation Rules:
+- Smooth real-time updates to the chart data.
+- Subtle transitions for dropdowns and modal windows.
+- Hover effects on market cards providing detailed information.
+
+Color System:
+- A dark-themed interface with neon highlights (blue, green, and red) to signify positive and negative market movements.
+- Employ gradients to provide depth and interest.
+
+Typography:
+- Use modern, sleek sans-serif fonts, ensuring key metrics and headings are visually distinct.
+- Maintain appropriate sizing for voice-based interactions and readability.
+
+Component Style:
+- Design buttons with rounded edges and subtle glowing effects.
+- Interactive cards to display market stats should have depth with shadow effects.
+
+Responsive Rules:
+- Ensure the dashboard layout adapts fluidly to different screen sizes, maintaining usability and visibility.
+- Implement touch-friendly controls for mobile devices.
+
+Mobile-first Rules:
+- Prioritize a mobile-centric design approach, simplifying the layout for on-the-go trading.
+- Essential features must be easily reachable within a thumb's range.
+
+Interaction Effects:
+- Utilize smooth hover and click effects to improve user engagement.
+- Implement modal pop-ups for trading confirmations and alerts.
+
+Restrictions:
+- Avoid basic HTML templates and minimalist designs that undermine user engagement.
+- Exclude complex libraries and frameworks such as GSAP, Bootstrap, or jQuery.
+
+Code Standards:
+- Maintain high standards for code quality employing only HTML, CSS, and JavaScript.
+
+Expected Final Result:
+The final product should be a sophisticated cryptocurrency trading dashboard that combines aesthetic appeal with functional robustness. It must support real-time trading experience while being responsive and engaging for all user types.
 ```
