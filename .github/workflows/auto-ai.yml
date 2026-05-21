@@ -1,38 +1,75 @@
-- name: Run AI
-  env:
-    OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-  run: |
-    node -e "
-    const axios = require('axios');
-    const fs = require('fs');
+name: Autonomous AI Worker
 
-    async function run() {
-      let html = '';
-      try {
-        html = fs.readFileSync('index.html','utf8');
-      } catch {
-        html = '<html><body><h1>Starter</h1></body></html>';
-      }
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'
 
-      axios.post('https://openrouter.ai/api/v1/chat/completions',{
-        model: 'mistralai/mistral-7b-instruct:free',
-        messages: [{
-          role: 'user',
-          content: 'Improve this into futuristic SaaS UI. Return ONLY HTML.\n\n' + html
-        }]
-      },{
-        headers: {
-          Authorization: 'Bearer ' + process.env.OPENROUTER_API_KEY
-        }
-      }).then(res=>{
-        const out = res.data.choices[0].message.content;
-        fs.writeFileSync('index.html', out);
-        console.log('DONE');
-      }).catch(err=>{
-        console.error(err.response?.data || err.message);
-        process.exit(1);
-      });
-    }
+permissions:
+  contents: write
 
-    run();
-    "        run: git push
+jobs:
+  ai-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Axios
+        run: npm install axios
+
+      - name: Run AI
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          node -e "
+          const axios = require('axios');
+          const fs = require('fs');
+
+          async function run() {
+            let html = '';
+
+            try {
+              html = fs.readFileSync('index.html','utf8');
+            } catch {
+              html = '<html><body><h1>Starter</h1></body></html>';
+            }
+
+            axios.post('https://openrouter.ai/api/v1/chat/completions',{
+              model: 'mistralai/mistral-7b-instruct:free',
+              messages: [{
+                role: 'user',
+                content: 'Improve this into futuristic SaaS UI. Return ONLY HTML.\n\n' + html
+              }]
+            },{
+              headers: {
+                Authorization: 'Bearer ' + process.env.OPENROUTER_API_KEY
+              }
+            }).then(res=>{
+              const out = res.data.choices[0].message.content;
+              fs.writeFileSync('index.html', out);
+              console.log('DONE');
+            }).catch(err=>{
+              console.error(err.response?.data || err.message);
+              process.exit(1);
+            });
+          }
+
+          run();
+          "
+
+      - name: Commit Changes
+        run: |
+          git config --global user.name "AI Worker"
+          git config --global user.email "ai@worker.com"
+          git add .
+          git commit -m "AI update" || echo "No changes"
+
+      - name: Push Changes
+        run: git push
