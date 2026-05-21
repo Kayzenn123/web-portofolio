@@ -213,7 +213,31 @@ Return ONLY a complete working HTML file.
 ========================
 INPUT WEBSITE CODE
 ========================
-${html}`
+${html}DESIGN SYSTEM (MUST FOLLOW):
+
+Spacing scale:
+- 4px, 8px, 12px, 16px, 24px, 32px, 48px
+
+Border radius:
+- small: 8px
+- medium: 16px
+- large: 24px
+
+Shadow system:
+- subtle soft shadow only
+- no harsh shadows
+
+Color system:
+- background: dark neutral (#0b0f17 / #0f172a style)
+- primary: soft blue / cyan
+- accent: purple/teal gradient
+- success: green
+- danger: red
+
+UI style:
+- Apple + Stripe inspired
+- glassmorphism minimal (not overused)
+- clean SaaS dashboard style`
         },
       ],
     },
