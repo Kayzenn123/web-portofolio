@@ -5,6 +5,9 @@ on:
   schedule:
     - cron: '0 */6 * * *'
 
+permissions:
+  contents: write
+
 jobs:
   ai-update:
     runs-on: ubuntu-latest
@@ -13,16 +16,16 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Generate AI Update
+      - name: Modify Website
         run: |
-          echo "<!-- AI Improved $(date) -->" >> index.html
+          echo "<!-- AI Updated $(date) -->" >> index.html
 
       - name: Commit Changes
         run: |
           git config --global user.name "AI Worker"
           git config --global user.email "ai@worker.com"
           git add .
-          git commit -m "AI autonomous update" || echo "No changes"
+          git commit -m "Autonomous AI update" || echo "No changes"
 
       - name: Push Changes
         run: |
